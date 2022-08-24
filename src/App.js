@@ -1,36 +1,40 @@
 import './App.css';
 import { useState } from 'react';
-import { SwitchTransition, CSSTransition } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 function App() {
-  const [mode, setMode] = useState('out-in');
-  const [toggle, setToggle] = useState(false);
-  const changeHandler = (e) => {
-    setMode(e.target.value);
+  const [text, setText] = useState('');
+  const [todoList, setTodoList] = useState([
+    { id: 1, text: 'do a task' },
+    { id: 2, text: 'learn English' },
+    { id: 3, text: 'do a sport' }]);
+  
+  const addTodo = () => {
+    setTodoList([...todoList, { id: Date.now(), text }]);
   };
+  
   return (
     <div className="app">
       <div>
-        <label htmlFor='out-in'>out-in</label>
-        <input onChange={(e) => changeHandler(e)} id='out-in' value='out-in' type='radio' name='radio' required />
-        <label htmlFor='in-out'>in-out</label>
-        <input onChange={(e) => changeHandler(e)} id='in-out' value='in-out' type='radio' name='radio' />
+        <input onChange={e => setText(e.target.value)} value={text} type='text' />
+        <button onClick={() => addTodo()}>Add</button>
       </div>
-      <SwitchTransition mode={mode}>
-        <CSSTransition
-          key={toggle}
-          timeout={500}
-          classNames='fade'
-          mountOnEnter
-          unmountOnExit
-        >
-          <button onClick={() => setToggle(!toggle)}>
-            {toggle ? 'Hello World' : 'Goodbye World'}
-          </button>
-        </CSSTransition>
-      </SwitchTransition>
+      <TransitionGroup
+        component='ul'
+
+      >
+        {todoList.map(({ id, text }) =>
+          <CSSTransition
+            key={id}
+            timeout={500}
+            classNames='todo'
+          >
+            <li className='todo' key={id} onClick={() => setTodoList([...todoList.filter(todo => todo.id !== id)])}>{id} {text}</li>
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </div>
-  );
+  )
 }
 
 export default App;

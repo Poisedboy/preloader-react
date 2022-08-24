@@ -17,32 +17,38 @@ input {
   margin: 20px;
 }
 
-.fade-enter-active {
+.todo-enter-active {
   animation: fade-in .5s forwards;
 }
 
-.fade-exit-active {
+.todo-exit-active {
   animation: fade-out .5s forwards;
 }
 
 @keyframes fade-in {
-  0%{
+  0% {
     opacity: 0;
-    transform: translateX(-150px);
+    transform: translateX(-100px);
   }
-  100%{
+  100% {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
 @keyframes fade-out {
-  0%{
+  0% {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0px);
   }
-  100%{
+  100% {
     opacity: 0;
-    transform: translateX(150px);
+    transform: translateX(100px);
   }
+}
+
+.todo {
+  border: 1px solid black;
+  padding: 5px 10px;
+  margin: 15px;
 }
